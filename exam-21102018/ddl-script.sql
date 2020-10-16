@@ -1,13 +1,14 @@
-CREATE DATABASE `colonial_journey_db`;
+create DATABASE `colonial_journey_db`;
 USE colonial_journey_db;
 
-CREATE TABLE IF NOT EXISTS `planets`
+
+create TABLE IF NOT EXISTS `planets`
 (
     `id`   INT AUTO_INCREMENT PRIMARY KEY,
     `name` VARCHAR(30) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS `spaceships`
+create TABLE IF NOT EXISTS `spaceships`
 (
     `id`               INT AUTO_INCREMENT PRIMARY KEY,
     `name`             VARCHAR(50) NOT NULL,
@@ -15,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `spaceships`
     `light_speed_rate` INT DEFAULT 0
 );
 
-CREATE TABLE IF NOT EXISTS `colonists`
+create TABLE IF NOT EXISTS `colonists`
 (
     `id`         INT AUTO_INCREMENT PRIMARY KEY,
     `first_name` VARCHAR(20) NOT NULL,
@@ -24,22 +25,22 @@ CREATE TABLE IF NOT EXISTS `colonists`
     `birth_date` DATE        NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS `spaceports`
+create TABLE IF NOT EXISTS `spaceports`
 (
     `id`        INT AUTO_INCREMENT PRIMARY KEY,
     `name`      VARCHAR(50) NOT NULL,
     `planet_id` INT         NOT NULL,
     CONSTRAINT `fk_spaceports_planets`
         FOREIGN KEY (`planet_id`)
-            REFERENCES `planets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+            REFERENCES `planets` (`id`) ON delete CASCADE ON update CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `journeys`
 (
     `id`                       INT AUTO_INCREMENT PRIMARY KEY,
-    `journey_start`            DATETIME NOT NULL,
-    `journey_end`              DATETIME NOT NULL,
-    `purpose`                  ENUM ( 'Medical' , 'Technical' , 'Educational' , 'Military' ),
+    `journey_start`            DATETIME                                                      NOT NULL,
+    `journey_end`              DATETIME                                                      NOT NULL,
+    `purpose`                  ENUM ( 'Medical' , 'Technical' , 'Educational' , 'Military' ) NOT NULL,
     `destination_spaceport_id` INT,
     `spaceship_id`             INT,
     CONSTRAINT `fk_journeys_spaceports`
@@ -54,7 +55,7 @@ CREATE TABLE `travel_cards`
 (
     `id`                 INT AUTO_INCREMENT PRIMARY KEY,
     `card_number`        CHAR(10) NOT NULL UNIQUE,
-    `job_during_journey` ENUM ('Pilot', 'Engineer', 'Trooper', 'Cleaner', 'Cook'),
+    `job_during_journey` ENUM ('Pilot', 'Engineer', 'Trooper', 'Cleaner', 'Cook') NOT NULL,
     `colonist_id`        INT      NOT NULL,
     `journey_id`         INT,
     CONSTRAINT `fk_travel_cards_colonists`
